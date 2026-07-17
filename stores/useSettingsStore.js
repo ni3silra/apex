@@ -18,6 +18,11 @@ const useSettingsStore = create((set, get) => ({
   filterTag: null,
   hiddenTags: [],
   isLoaded: false,
+  storageProvider: 'local', // 'local' | 'gdrive' | 'onedrive'
+  cloudFolderId: null, // ID of the folder in GDrive/OneDrive
+  cloudToken: null, // Access token for the current provider
+  googleClientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '',
+  onedriveClientId: process.env.NEXT_PUBLIC_ONEDRIVE_CLIENT_ID || '',
 
   loadFromStorage: async () => {
     const settings = (await loadData('settings')) || {};
@@ -26,13 +31,18 @@ const useSettingsStore = create((set, get) => ({
       activeView: settings.activeView || 'briefing',
       theme: settings.theme || 'dark',
       hiddenTags: settings.hiddenTags || [],
+      storageProvider: settings.storageProvider || 'local',
+      cloudFolderId: settings.cloudFolderId || null,
+      cloudToken: settings.cloudToken || null,
+      googleClientId: settings.googleClientId || process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '',
+      onedriveClientId: settings.onedriveClientId || process.env.NEXT_PUBLIC_ONEDRIVE_CLIENT_ID || '',
       isLoaded: true,
     });
   },
 
   persist: async () => {
-    const { userName, activeView, theme, hiddenTags } = get();
-    await saveData('settings', { userName, activeView, theme, hiddenTags });
+    const { userName, activeView, theme, hiddenTags, storageProvider, cloudFolderId, cloudToken, googleClientId, onedriveClientId } = get();
+    await saveData('settings', { userName, activeView, theme, hiddenTags, storageProvider, cloudFolderId, cloudToken, googleClientId, onedriveClientId });
   },
 
   setUserName: (name) => {
@@ -53,6 +63,26 @@ const useSettingsStore = create((set, get) => ({
   toggleShortcuts: () => set(s => ({ showShortcuts: !s.showShortcuts })),
   setStorageSetup: (show) => set({ showStorageSetup: show }),
   setStorageReady: (ready) => set({ storageReady: ready }),
+  setStorageProvider: (provider) => {
+    set({ storageProvider: provider });
+    setTimeout(() => get().persist(), 0);
+  },
+  setCloudFolderId: (id) => {
+    set({ cloudFolderId: id });
+    setTimeout(() => get().persist(), 0);
+  },
+  setCloudToken: (token) => {
+    set({ cloudToken: token });
+    setTimeout(() => get().persist(), 0);
+  },
+  setGoogleClientId: (id) => {
+    set({ googleClientId: id });
+    setTimeout(() => get().persist(), 0);
+  },
+  setOnedriveClientId: (id) => {
+    set({ onedriveClientId: id });
+    setTimeout(() => get().persist(), 0);
+  },
   selectTask: (id) => set({ selectedTaskId: id }),
   clearSelection: () => set({ selectedTaskId: null }),
   setSearch: (query) => set({ searchQuery: query }),

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import useSettingsStore from '@/stores/useSettingsStore';
 import useTaskStore from '@/stores/useTaskStore';
 import { pickDirectory, getDirectory, isFileSystemSupported, clearStorageHandle } from '@/lib/storage';
+import StorageProviderGrid from './StorageProviderGrid';
 import { motion } from 'framer-motion';
 import { HardDrive, FolderOpen, X, Shield, CheckCircle, Trash2, Settings, User, AlertTriangle } from 'lucide-react';
 
@@ -10,6 +11,8 @@ export default function StorageSetup() {
   const setStorageSetup = useSettingsStore(s => s.setStorageSetup);
   const setStorageReady = useSettingsStore(s => s.setStorageReady);
   const storageReady = useSettingsStore(s => s.storageReady);
+  const storageProvider = useSettingsStore(s => s.storageProvider);
+  const setStorageProvider = useSettingsStore(s => s.setStorageProvider);
   const userName = useSettingsStore(s => s.userName);
   const setUserName = useSettingsStore(s => s.setUserName);
   const [picking, setPicking] = useState(false);
@@ -142,54 +145,7 @@ export default function StorageSetup() {
 
             {activeTab === 'storage' && (
               <div className="animate-fade-in">
-                <h3 style={{ fontSize: '1.1rem', marginBottom: 'var(--space-4)' }}>Storage</h3>
-                
-                {storageReady ? (
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 'var(--space-4)', borderBottom: '1px solid var(--border-subtle)' }}>
-                    <div style={{ flex: 1, paddingRight: 'var(--space-4)' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-2)' }}>
-                        <CheckCircle size={16} style={{ color: 'var(--success)' }} />
-                        <h4 style={{ fontSize: '0.95rem', margin: 0 }}>Local Folder Connected</h4>
-                      </div>
-                      <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: 0 }}>
-                        Your tasks are saved directly to your disk as JSON files. They survive browser resets.
-                      </p>
-                    </div>
-                    <div>
-                      <button className="btn btn-primary" onClick={handlePickFolder}>
-                        <FolderOpen size={16} style={{ marginRight: 6 }} /> Change Folder
-                      </button>
-                    </div>
-                  </div>
-                ) : fsSupported ? (
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 'var(--space-4)', borderBottom: '1px solid var(--border-subtle)' }}>
-                    <div style={{ flex: 1, paddingRight: 'var(--space-4)' }}>
-                      <h4 style={{ fontSize: '0.95rem', margin: '0 0 var(--space-2) 0' }}>Connect Local Folder</h4>
-                      <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0 0 var(--space-2) 0' }}>
-                        Save your tasks directly to your computer as readable JSON files. They survive browser resets and can be tracked with Git.
-                      </p>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: '0.8rem', color: 'var(--success)' }}>
-                        <Shield size={14} /> Files stay on your device. Nothing is uploaded.
-                      </div>
-                      {error && (
-                        <div style={{ color: 'var(--danger)', fontSize: '0.85rem', marginTop: 'var(--space-2)' }}>{error}</div>
-                      )}
-                    </div>
-                    <div>
-                      <button className="btn btn-primary" onClick={handlePickFolder} disabled={picking}>
-                        <FolderOpen size={16} style={{ marginRight: 6 }} /> {picking ? 'Selecting...' : 'Connect Folder'}
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                      Your browser doesn&apos;t support the File System Access API. Data is saved to
-                      IndexedDB which survives normal cache clears. For full filesystem storage, use
-                      Chrome or Edge.
-                    </p>
-                  </div>
-                )}
+                <StorageProviderGrid handlePickFolder={handlePickFolder} picking={picking} />
               </div>
             )}
 
