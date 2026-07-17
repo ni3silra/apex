@@ -3,6 +3,7 @@ import { create } from 'zustand';
 import { saveData, loadData } from '@/lib/storage';
 
 const useSettingsStore = create((set, get) => ({
+  userName: '',
   activeView: 'briefing',
   theme: 'dark',
   showQuickAdd: false,
@@ -21,6 +22,7 @@ const useSettingsStore = create((set, get) => ({
   loadFromStorage: async () => {
     const settings = (await loadData('settings')) || {};
     set({
+      userName: settings.userName || '',
       activeView: settings.activeView || 'briefing',
       theme: settings.theme || 'dark',
       hiddenTags: settings.hiddenTags || [],
@@ -29,8 +31,13 @@ const useSettingsStore = create((set, get) => ({
   },
 
   persist: async () => {
-    const { activeView, theme, hiddenTags } = get();
-    await saveData('settings', { activeView, theme, hiddenTags });
+    const { userName, activeView, theme, hiddenTags } = get();
+    await saveData('settings', { userName, activeView, theme, hiddenTags });
+  },
+
+  setUserName: (name) => {
+    set({ userName: name });
+    setTimeout(() => get().persist(), 0);
   },
 
   setView: (view) => {

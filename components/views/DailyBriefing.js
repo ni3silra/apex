@@ -15,6 +15,7 @@ export default function DailyBriefing() {
   const setView = useSettingsStore(s => s.setView);
   const selectTask = useSettingsStore(s => s.selectTask);
   const analytics = useAnalyticsStore(s => s.dailyStats);
+  const userName = useSettingsStore(s => s.userName);
 
   const activeTasks = tasks.filter(t => t.status !== 'done');
   const overdueTasks = tasks.filter(t => {
@@ -48,7 +49,7 @@ export default function DailyBriefing() {
         transition={{ duration: 0.5 }}
       >
         <h1 className="briefing-greeting">
-          {getGreeting()}, <span>Team</span>
+          {getGreeting()}, <span>{userName || 'Team'}</span>
         </h1>
         <p className="briefing-date">{format(new Date(), 'EEEE, MMMM d, yyyy')}</p>
       </motion.div>

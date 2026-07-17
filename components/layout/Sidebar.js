@@ -3,7 +3,7 @@ import useSettingsStore from '@/stores/useSettingsStore';
 import useTaskStore from '@/stores/useTaskStore';
 import { VIEWS, QUADRANTS } from '@/lib/constants';
 import { hasStorageSetup } from '@/lib/storage';
-import { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, HardDrive, Settings, Download, List, X, BookOpen } from 'lucide-react';
+import { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, HardDrive, Settings, Download, List, X, BookOpen, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const ICON_MAP = { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, List, BookOpen };
@@ -17,6 +17,7 @@ const ICON_COLORS = {
 };
 
 export default function Sidebar() {
+  const userName = useSettingsStore(s => s.userName);
   const activeView = useSettingsStore(s => s.activeView);
   const setView = useSettingsStore(s => s.setView);
   const storageReady = useSettingsStore(s => s.storageReady);
@@ -41,8 +42,8 @@ export default function Sidebar() {
       <div className="sidebar-header">
         <div>
           <div className="sidebar-logo">APEX</div>
-          <div style={{ fontSize: '0.68rem', color: 'var(--neutral-500)', marginTop: '-2px', letterSpacing: '0.5px' }}>
-            TASK COMMAND CENTER
+          <div style={{ fontSize: '0.68rem', color: 'var(--neutral-500)', marginTop: '-2px', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
+            {userName ? `${userName}'s COMMAND CENTER` : 'TASK COMMAND CENTER'}
           </div>
         </div>
       </div>
@@ -111,15 +112,14 @@ export default function Sidebar() {
       <div style={{ marginTop: 'auto' }}>
       </div>
 
-      {/* Storage indicator */}
+      {/* Settings Button */}
       <div className="sidebar-storage">
         <button
           className="storage-indicator"
           onClick={() => setStorageSetup(true)}
         >
-          <div className={`storage-dot ${storageReady ? 'connected' : 'disconnected'}`} />
-          <HardDrive size={14} />
-          <span>{storageReady ? 'Local Storage Active' : 'Set Up Storage'}</span>
+          <Settings size={14} />
+          <span>Settings</span>
         </button>
       </div>
     </aside>

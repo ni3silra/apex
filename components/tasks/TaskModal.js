@@ -188,11 +188,21 @@ export default function TaskModal({ taskId }) {
                 </span>
               </div>
               <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-                <button className="btn btn-danger" onClick={handleDelete} title="Delete task">
+                <button 
+                  className="btn btn-primary" 
+                  onClick={() => {
+                    clearSelection();
+                    toast.success('Task saved');
+                  }}
+                  style={{ padding: '4px 10px', fontSize: '0.8rem', height: '32px' }}
+                >
+                  <CheckCircle2 size={14} style={{ marginRight: 6 }} /> Save
+                </button>
+                <button className="btn btn-danger" onClick={handleDelete} title="Delete task" style={{ height: '32px' }}>
                   <Trash2 size={15} />
                 </button>
                 <Dialog.Close asChild>
-                  <button className="btn-icon"><X size={18} /></button>
+                  <button className="btn-icon" style={{ height: '32px', width: '32px' }}><X size={18} /></button>
                 </Dialog.Close>
               </div>
             </div>

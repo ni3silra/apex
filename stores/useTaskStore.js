@@ -50,6 +50,11 @@ const useTaskStore = create((set, get) => ({
     setTimeout(() => get().persist(), 0);
   },
 
+  clearAllData: () => {
+    set({ tasks: [], contacts: [], tags: [] });
+    setTimeout(() => get().persist(), 0);
+  },
+
   // ─── Task CRUD ──────────────────────────────────────────────
   addTask: (taskData) => {
     const task = {
