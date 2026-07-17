@@ -27,6 +27,32 @@ function MiniBarChart({ data, color, maxValue }) {
   );
 }
 
+function MultiColorMiniBarChart({ data, colors, maxValue, labels }) {
+  const max = maxValue || Math.max(...data, 1);
+  return (
+    <div className="analytics-bar-chart" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', height: '55px', gap: '4px', marginTop: 'var(--space-4)' }}>
+      {data.map((value, i) => (
+        <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1, justifyContent: 'flex-end' }}>
+          <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', marginBottom: '2px', fontWeight: 'bold' }}>
+            {value > 0 ? value : ''}
+          </span>
+          <div
+            title={`${labels ? labels[i] + ': ' : ''}${value} tasks`}
+            style={{
+              width: '100%',
+              height: `${Math.max(2, (value / max) * 40)}px`,
+              background: colors[i],
+              borderRadius: '2px 2px 0 0',
+              opacity: 1,
+              transition: 'height 0.3s ease'
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Analytics() {
   const tasks = useTaskStore(s => s.tasks);
   const dailyStats = useAnalyticsStore(s => s.dailyStats);
@@ -212,78 +238,36 @@ export default function Analytics() {
           <MiniBarChart data={last7DaysFocus} color="var(--primary)" />
         </motion.div>
 
-        {/* Overdue */}
-        <motion.div
-          className="analytics-card"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-        >
-          <div className="analytics-card-title">
-            <Clock size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />
-            Overdue Tasks
-          </div>
-          <div className="analytics-big-number" style={{ color: overdueTasks > 0 ? 'var(--danger)' : 'var(--success)' }}>
-            {overdueTasks}
-          </div>
-          <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginTop: 'var(--space-2)' }}>
-            {overdueTasks === 0 ? 'All clear! 🏁' : 'Needs attention'}
-          </div>
-        </motion.div>
 
-        {/* Quadrant Distribution */}
+
+        {/* Active & Overdue */}
         <motion.div
           className="analytics-card"
-          style={{ gridColumn: 'span 2' }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
           <div className="analytics-card-title">
             <Flame size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />
-            Quadrant Distribution (Active Tasks)
+            Active & Overdue
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--space-4)', marginTop: 'var(--space-4)' }}>
-            {Object.values(QUADRANTS).map(q => (
-              <div key={q.id} style={{ textAlign: 'center' }}>
-                <div style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '2.2rem',
-                  fontWeight: 800,
-                  color: q.color,
-                }}>
-                  {quadrantDist[q.id]}
-                </div>
-                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: 'var(--space-1)' }}>
-                  {q.label}
-                </div>
-                <div style={{
-                  height: 4,
-                  background: 'var(--dark-navy)',
-                  borderRadius: 'var(--radius-full)',
-                  marginTop: 'var(--space-2)',
-                  overflow: 'hidden',
-                }}>
-                  <div style={{
-                    height: '100%',
-                    width: `${totalActive > 0 ? (quadrantDist[q.id] / totalActive) * 100 : 0}%`,
-                    background: q.color,
-                    borderRadius: 'var(--radius-full)',
-                  }} />
-                </div>
-              </div>
-            ))}
+          <div className="analytics-big-number" style={{ color: 'var(--text-primary)' }}>
+            {totalActive}
           </div>
+          <MultiColorMiniBarChart 
+            data={[...Object.values(QUADRANTS).map(q => quadrantDist[q.id]), overdueTasks]} 
+            colors={[...Object.values(QUADRANTS).map(q => q.color), 'var(--danger)']} 
+            labels={[...Object.values(QUADRANTS).map(q => q.label), 'Overdue']}
+          />
         </motion.div>
-      </div>
-
-      {/* Impact Analysis Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        style={{ marginTop: 'var(--space-8)' }}
-      >
+        {/* Impact Analysis Section */}
+        <motion.div
+          className="analytics-card"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          style={{ gridColumn: 'span 4', maxHeight: '400px', overflowY: 'auto', paddingRight: '12px' }}
+        >
         <div className="analytics-card-title" style={{ marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Activity size={18} style={{ color: 'var(--primary)' }} />
           Impact Analysis
@@ -380,7 +364,8 @@ export default function Analytics() {
             );
           })}
         </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 }

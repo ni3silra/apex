@@ -13,6 +13,7 @@ import EisenhowerMatrix from '@/components/views/EisenhowerMatrix';
 import PriorityQueue from '@/components/views/PriorityQueue';
 import FocusMode from '@/components/views/FocusMode';
 import Analytics from '@/components/views/Analytics';
+import Guide from '@/components/views/Guide';
 import TaskModal from '@/components/tasks/TaskModal';
 import QuickAdd from '@/components/tasks/QuickAdd';
 import CommandPalette from '@/components/shared/CommandPalette';
@@ -143,6 +144,7 @@ export default function Home() {
       case 'ranking': return <PriorityQueue />;
       case 'focus': return <FocusMode />;
       case 'analytics': return <Analytics />;
+      case 'guide': return <Guide />;
       default: return <DailyBriefing />;
     }
   };

@@ -3,16 +3,17 @@ import useSettingsStore from '@/stores/useSettingsStore';
 import useTaskStore from '@/stores/useTaskStore';
 import { VIEWS, QUADRANTS } from '@/lib/constants';
 import { hasStorageSetup } from '@/lib/storage';
-import { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, HardDrive, Settings, Download, List, X } from 'lucide-react';
+import { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, HardDrive, Settings, Download, List, X, BookOpen } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-const ICON_MAP = { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, List };
+const ICON_MAP = { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, List, BookOpen };
 const ICON_COLORS = {
   briefing: 'var(--primary)',
   matrix: 'var(--success)',
   ranking: 'var(--warning)',
   focus: 'var(--danger)',
-  analytics: 'var(--db-bright-blue)'
+  analytics: 'var(--db-bright-blue)',
+  guide: 'var(--neutral-400)'
 };
 
 export default function Sidebar() {
@@ -50,6 +51,7 @@ export default function Sidebar() {
       <nav className="sidebar-nav">
         <div className="sidebar-section-title">Views</div>
         {Object.values(VIEWS).map(view => {
+          if (view.id === 'guide') return null;
           const Icon = ICON_MAP[view.icon];
           const color = ICON_COLORS[view.id] || 'var(--text-secondary)';
           return (
@@ -60,7 +62,6 @@ export default function Sidebar() {
             >
               {Icon && <Icon size={18} style={{ color }} />}
               {view.label}
-              <span className="sidebar-nav-shortcut">{view.shortcut}</span>
             </button>
           );
         })}
@@ -108,9 +109,6 @@ export default function Sidebar() {
       </div>
 
       <div style={{ marginTop: 'auto' }}>
-        <button className="btn btn-ghost" style={{ width: '100%', margin: 'var(--space-2) 0', fontSize: '0.8rem', opacity: 0.6 }} onClick={() => useTaskStore.getState().generateDummyData()}>
-          Generate Dummy Data
-        </button>
       </div>
 
       {/* Storage indicator */}

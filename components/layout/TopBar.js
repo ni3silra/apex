@@ -1,7 +1,7 @@
 'use client';
 import useSettingsStore from '@/stores/useSettingsStore';
 import useTaskStore from '@/stores/useTaskStore';
-import { Search, Command, Plus, Keyboard, Sun, Moon } from 'lucide-react';
+import { Search, Command, Plus, Keyboard, Sun, Moon, BookOpen } from 'lucide-react';
 
 export default function TopBar() {
   const searchQuery = useSettingsStore(s => s.searchQuery);
@@ -14,6 +14,7 @@ export default function TopBar() {
   const setFilterStatus = useSettingsStore(s => s.setFilterStatus);
   const theme = useSettingsStore(s => s.theme);
   const setTheme = useSettingsStore(s => s.setTheme);
+  const setView = useSettingsStore(s => s.setView);
   const tasks = useTaskStore(s => s.tasks);
 
   const activeTasks = tasks.filter(t => t.status !== 'done');
@@ -67,6 +68,9 @@ export default function TopBar() {
 
       {/* Actions */}
       <div className="topbar-actions">
+        <button className="btn-icon" onClick={() => setView('guide')} title="Open Guide">
+          <BookOpen size={18} />
+        </button>
         <button className="btn-icon" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} title="Toggle Theme">
           {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
         </button>
