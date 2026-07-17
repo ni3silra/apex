@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import useSettingsStore from '@/stores/useSettingsStore';
 import useTaskStore from '@/stores/useTaskStore';
-import { Search, Command, Plus, Keyboard, Sun, Moon, BookOpen, Menu, X, Activity, Settings } from 'lucide-react';
+import { Search, Command, Plus, Keyboard, Sun, Moon, BookOpen, Menu, X, Droplet, Settings } from 'lucide-react';
 
 export default function TopBar() {
   const searchQuery = useSettingsStore(s => s.searchQuery);
@@ -33,9 +33,11 @@ export default function TopBar() {
     <div className="topbar">
       {/* Mobile Header (Only visible on small screens) */}
       <div className="topbar-mobile-header">
-        <div className="topbar-logo" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontWeight: 'bold', fontSize: '1.2rem', color: 'var(--text-primary)' }}>
-          <Activity size={20} style={{ color: 'var(--db-bright-blue)' }} />
-          <span>Apex</span>
+        <div className="topbar-logo" style={{ display: 'flex', alignItems: 'center', color: 'var(--text-primary)', letterSpacing: '1px', fontSize: '1.3rem', fontWeight: 'bold' }}>
+          SUK
+          <Droplet fill="var(--primary)" color="var(--primary)" size={18} style={{ margin: '0 -2px 0 1px' }} />
+          <Droplet fill="var(--primary)" color="var(--primary)" size={18} style={{ margin: '0 1px 0 -2px' }} />
+          N
         </div>
         <button className="btn-ghost mobile-menu-btn" style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '4px 8px', borderRadius: 'var(--radius-md)', color: 'var(--text-secondary)' }} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
           {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
