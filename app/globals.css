@@ -6,47 +6,51 @@
 
 :root {
   color-scheme: dark;
-  /* Enterprise Slate Dark Theme */
-  --dark-navy: #000000;
-  --surface: #121212;
-  --surface-elevated: #1E1E1E;
-  --surface-hover: #2A2A2A;
-  --surface-active: #333333;
+  /* Sukoon Dark Theme - Dark Blue Night Sky */
+  --bg-primary: #020617; /* Deep navy night */
+  --bg-image: 
+    radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 80px 70px, rgba(255,255,255,0.6), rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 150px 160px, rgba(255,255,255,0.4), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 250px 80px, rgba(255,255,255,0.3), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 100px 180px, rgba(255,255,255,0.5), rgba(0,0,0,0)),
+    linear-gradient(180deg, #020617 0%, #0B1120 100%);
+
+  --surface: #0F172A;
+  --surface-elevated: #1E293B;
+  --surface-hover: #334155;
+  --surface-active: #475569;
 
   /* Semantic Colors */
-  --db-blue: #0018A8;
-  --db-bright-blue: #00A3E0;
-  --primary: #58A6FF;
+  --db-blue: #0284C7;
+  --db-bright-blue: #0EA5E9;
+  --primary: #38BDF8; /* Sky Blue 400 */
+  --primary-hover: #7DD3FC;
   --success: #3FB950;
   --warning: #D29922;
   --danger: #F85149;
 
-  /* Neutrals */
+  /* Neutrals mapped to cool teal grays */
   --neutral-50: #F8FAFC;
   --neutral-100: #F1F5F9;
   --neutral-200: #E2E8F0;
-  --neutral-300: #CBD5E1;
-  --neutral-400: #8B949E;
-  --neutral-500: #6E7681;
-  --neutral-600: #484F58;
-  --neutral-700: #21262D;
-  --neutral-800: #161B22;
+  --neutral-300: #A5BABB;
+  --neutral-400: #789495;
+  --neutral-500: #547171;
+  --neutral-600: #385252;
+  --neutral-700: #233939;
+  --neutral-800: #122423;
 
   /* Semantic Variables */
-  --text-primary: var(--neutral-100);
-  --text-secondary: var(--neutral-400);
+  --text-primary: #F8FAFC;
+  --text-secondary: var(--neutral-300);
   --text-muted: var(--neutral-500);
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-medium: rgba(255, 255, 255, 0.15);
-  --border-strong: rgba(255, 255, 255, 0.25);
-
-  /* Cosmos Background Colors */
-  --star-strong: rgba(255, 255, 255, 1);
-  --star-medium: rgba(255, 255, 255, 0.8);
-  --star-faint: rgba(255, 255, 255, 0.5);
+  --border-subtle: rgba(248, 250, 252, 0.08);
+  --border-medium: rgba(248, 250, 252, 0.15);
+  --border-strong: rgba(248, 250, 252, 0.25);
 
   /* Task Card Background */
-  --task-card-bg: rgba(17, 22, 56, 0.5);
+  --task-card-bg: rgba(15, 23, 42, 0.6);
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
@@ -66,17 +70,17 @@
 
   /* Radius */
   --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
   --radius-full: 9999px;
 
-  /* Shadows - softened for enterprise */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.3);
-  --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
-  --shadow-glow-blue: 0 0 15px rgba(88, 166, 255, 0.15);
-  --shadow-glow-purple: 0 0 15px rgba(210, 153, 34, 0.15);
+  /* Shadows - softened for a calming aesthetic */
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.2);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.3);
+  --shadow-glow-blue: 0 0 15px rgba(43, 179, 172, 0.15);
+  --shadow-glow-purple: 0 0 15px rgba(197, 155, 95, 0.15);
   --shadow-glow-red: 0 0 15px rgba(248, 81, 73, 0.15);
 
   /* Transitions */
@@ -92,34 +96,40 @@
 
 :root[data-theme="light"] {
   color-scheme: light;
-  --dark-navy: #EBF3FA;
+  --bg-primary: #F0F9FF;
+  --bg-image: 
+    radial-gradient(1px 1px at 30px 40px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 120px 90px, rgba(255,255,255,0.6), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 180px 140px, rgba(255,255,255,0.7), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 220px 50px, rgba(255,255,255,0.5), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 90px 200px, rgba(255,255,255,0.9), rgba(0,0,0,0)),
+    linear-gradient(180deg, #E0F2FE 0%, #F0F9FF 100%);
   --surface: #FFFFFF;
-  --surface-elevated: #FFFFFF;
-  --surface-hover: #DCE8F5;
-  --surface-active: #C8DAED;
+  --surface-elevated: #F8FAFC;
+  --surface-hover: #F1F5F9;
+  --surface-active: #E2E8F0;
 
   /* Text mapping */
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
+  --text-primary: #0F172A; /* Slate 900 */
+  --text-secondary: #334155;
   --text-muted: #64748B;
 
   /* Border mapping */
-  --border-subtle: rgba(0, 0, 0, 0.08);
-  --border-medium: rgba(0, 0, 0, 0.15);
-  --border-strong: rgba(0, 0, 0, 0.25);
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-medium: rgba(15, 23, 42, 0.15);
+  --border-strong: rgba(15, 23, 42, 0.25);
+
+  /* primary color */
+  --primary: #0284C7; /* Sky Blue 600 */
+  --primary-hover: #0369A1;
 
   /* Shadows for light mode */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-
-  /* Cosmos Background Colors */
-  --star-strong: rgba(0, 0, 0, 0.2);
-  --star-medium: rgba(0, 0, 0, 0.15);
-  --star-faint: rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.12);
 
   /* Task Card Background */
-  --task-card-bg: rgba(0, 163, 224, 0.08); /* faint db-bright-blue tint */
+  --task-card-bg: rgba(255, 255, 255, 0.8);
 }
 
 /* ─── Reset ────────────────────────────────────────────────── */
@@ -127,16 +137,11 @@
 html { font-size: 14px; }
 body {
   font-family: var(--font-sans);
-  background: var(--dark-navy);
-  background-image: 
-    radial-gradient(1px 1px at 20px 30px, var(--star-strong), rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 40px 70px, var(--star-strong), rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 50px 160px, var(--star-medium), rgba(0,0,0,0)),
-    radial-gradient(1.5px 1.5px at 90px 40px, var(--star-medium), rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 130px 80px, var(--star-faint), rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 160px 120px, var(--star-strong), rgba(0,0,0,0));
-  background-repeat: repeat;
-  background-size: 200px 200px;
+  background: var(--bg-primary);
+  background-image: var(--bg-image);
+  background-size: 200px 200px, 300px 300px, 250px 250px, 200px 200px, 350px 350px, 100% 100%;
+  background-repeat: repeat, repeat, repeat, repeat, repeat, no-repeat;
+  background-attachment: fixed;
   animation: cosmosDrift 100s linear infinite;
   color: var(--text-primary);
   line-height: 1.6;
@@ -145,8 +150,8 @@ body {
 }
 
 @keyframes cosmosDrift {
-  from { background-position: 0 0; }
-  to { background-position: -400px -400px; }
+  from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+  to { background-position: -400px -400px, -300px -600px, -500px -250px, -200px -800px, -350px -350px, 0 0; }
 }
 a { color: var(--db-bright-blue); text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -252,7 +257,7 @@ input, textarea, select { font-family: inherit; color: inherit; color-scheme: in
   font-size: 0.75rem;
   color: var(--neutral-600);
   font-family: var(--font-mono);
-  background: var(--dark-navy);
+  background: var(--bg-primary);
   padding: 1px 6px;
   border-radius: var(--radius-sm);
 }
@@ -335,7 +340,7 @@ input, textarea, select { font-family: inherit; color: inherit; color-scheme: in
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  background: var(--dark-navy);
+  background: var(--bg-primary);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: var(--space-2) var(--space-3);
@@ -385,9 +390,9 @@ input, textarea, select { font-family: inherit; color: inherit; color-scheme: in
 }
 .btn-primary {
   background: var(--primary);
-  color: #fff;
+  color: var(--bg-primary);
 }
-.btn-primary:hover { background: #3182ce; }
+.btn-primary:hover { background: var(--primary-hover); }
 .btn-ghost {
   color: var(--text-secondary);
 }
@@ -425,9 +430,9 @@ input, textarea, select { font-family: inherit; color: inherit; color-scheme: in
   width: 56px;
   height: 56px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--db-blue), var(--primary));
-  color: white;
-  box-shadow: var(--shadow-lg), var(--shadow-glow-blue);
+  background: var(--primary);
+  color: var(--bg-primary);
+  box-shadow: var(--shadow-lg), var(--shadow-glow-purple);
   z-index: 40;
   transition: all var(--transition-normal);
 }
@@ -495,13 +500,13 @@ input, textarea, select { font-family: inherit; color: inherit; color-scheme: in
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--text-secondary);
-  background: var(--dark-navy);
+  background: var(--bg-primary);
   padding: 2px 8px;
   border-radius: var(--radius-full);
 }
 .quadrant-progress {
   height: 2px;
-  background: var(--dark-navy);
+  background: var(--bg-primary);
 }
 .quadrant-progress-bar {
   height: 100%;
@@ -589,7 +594,7 @@ input, textarea, select { font-family: inherit; color: inherit; color-scheme: in
   font-family: var(--font-mono);
   padding: 1px 6px;
   border-radius: var(--radius-sm);
-  background: var(--dark-navy);
+  background: var(--bg-primary);
 }
 
 .task-card-tag {
@@ -697,7 +702,7 @@ input, textarea, select { font-family: inherit; color: inherit; color-scheme: in
 .f1-position.p1 { background: linear-gradient(135deg, #FFD700, #F5A623); color: #000; }
 .f1-position.p2 { background: linear-gradient(135deg, #C0C0C0, #8E8E8E); color: #000; }
 .f1-position.p3 { background: linear-gradient(135deg, #CD7F32, #A0522D); color: #fff; }
-.f1-position.other { background: var(--dark-navy); color: var(--neutral-400); }
+.f1-position.other { background: var(--bg-primary); color: var(--text-secondary); }
 
 .f1-task-info {
   flex: 1;
@@ -721,7 +726,7 @@ input, textarea, select { font-family: inherit; color: inherit; color-scheme: in
 .f1-sector-bar {
   width: 120px;
   height: 6px;
-  background: var(--dark-navy);
+  background: var(--bg-primary);
   border-radius: var(--radius-full);
   overflow: hidden;
   flex-shrink: 0;

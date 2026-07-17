@@ -2,8 +2,8 @@ import './globals.css';
 import { Toaster } from 'sonner';
 
 export const metadata = {
-  title: 'APEX — Eisenhower Task Command Center',
-  description: 'F1-precision task management with the Eisenhower Matrix. Prioritize like a champion.',
+  title: 'Sukoon — Mindful Productivity & Focus',
+  description: 'A mindful task management center. Prioritize with peace and clarity.',
 };
 
 export default function RootLayout({ children }) {
@@ -13,13 +13,13 @@ export default function RootLayout({ children }) {
         {children}
         <Toaster
           position="bottom-right"
-          theme="dark"
           toastOptions={{
             style: {
-              background: '#1A1F4A',
-              border: '1px solid rgba(255,255,255,0.1)',
-              color: '#F1F5F9',
-              fontFamily: 'Inter, sans-serif',
+              background: 'var(--surface-elevated)',
+              border: '1px solid var(--border-medium)',
+              color: 'var(--text-primary)',
+              fontFamily: 'var(--font-sans)',
+              boxShadow: 'var(--shadow-lg)'
             },
           }}
         />

@@ -3,7 +3,7 @@ import useSettingsStore from '@/stores/useSettingsStore';
 import useTaskStore from '@/stores/useTaskStore';
 import { VIEWS, QUADRANTS } from '@/lib/constants';
 import { hasStorageSetup } from '@/lib/storage';
-import { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, HardDrive, Settings, Download, List, X, BookOpen, Trash2, Plus } from 'lucide-react';
+import { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, HardDrive, Settings, Download, List, X, BookOpen, Trash2, Plus, Droplet } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const ICON_MAP = { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, List, BookOpen };
@@ -43,9 +43,14 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="sidebar-header">
         <div>
-          <div className="sidebar-logo">APEX</div>
-          <div style={{ fontSize: '0.68rem', color: 'var(--neutral-500)', marginTop: '-2px', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
-            {userName ? `${userName}'s COMMAND CENTER` : 'TASK COMMAND CENTER'}
+          <div className="sidebar-logo" style={{ display: 'flex', alignItems: 'center', color: 'var(--text-primary)', letterSpacing: '2px', fontSize: '1.6rem' }}>
+            SUK
+            <Droplet fill="var(--primary)" color="var(--primary)" size={22} style={{ margin: '0 -2px 0 2px' }} />
+            <Droplet fill="var(--primary)" color="var(--primary)" size={22} style={{ margin: '0 2px 0 -2px' }} />
+            N
+          </div>
+          <div style={{ fontSize: '0.62rem', color: 'var(--neutral-500)', marginTop: '2px', letterSpacing: '0.5px', textTransform: 'uppercase', fontWeight: 600 }}>
+            Mindful Productivity & Focus
           </div>
         </div>
       </div>

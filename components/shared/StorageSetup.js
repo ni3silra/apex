@@ -6,6 +6,7 @@ import { pickDirectory, getDirectory, isFileSystemSupported, clearStorageHandle 
 import StorageProviderGrid from './StorageProviderGrid';
 import { motion } from 'framer-motion';
 import { HardDrive, FolderOpen, X, Shield, CheckCircle, Trash2, Settings, User, AlertTriangle } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function StorageSetup() {
   const setStorageSetup = useSettingsStore(s => s.setStorageSetup);
@@ -163,12 +164,20 @@ export default function StorageSetup() {
                   <div>
                     <button 
                       className="btn btn-ghost"
-                      onClick={async () => {
-                        if (window.confirm('Are you sure you want to disconnect the local storage folder?')) {
-                          await clearStorageHandle();
-                          setStorageReady(false);
-                          setStorageSetup(false);
-                        }
+                      onClick={() => {
+                        toast.warning('Are you sure you want to disconnect the local storage folder?', {
+                          description: 'Your data will remain in the browser until you connect a new folder.',
+                          action: {
+                            label: 'Disconnect',
+                            onClick: async () => {
+                              await clearStorageHandle();
+                              setStorageReady(false);
+                              setStorageSetup(false);
+                              toast.success('Folder disconnected');
+                            }
+                          },
+                          cancel: { label: 'Cancel' }
+                        });
                       }}
                       style={{ border: '1px solid var(--border-subtle)', padding: '6px 12px', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
                     >
@@ -187,10 +196,18 @@ export default function StorageSetup() {
                   <div>
                     <button 
                       onClick={() => {
-                        if (window.confirm('Are you sure you want to reset the entire Command Center? This will delete all tasks and tags permanently.')) {
-                          useTaskStore.getState().clearAllData();
-                          setStorageSetup(false);
-                        }
+                        toast.error('Are you sure you want to reset the entire Command Center?', {
+                          description: 'This will delete all tasks and tags permanently. This cannot be undone.',
+                          action: {
+                            label: 'Hard Reset',
+                            onClick: () => {
+                              useTaskStore.getState().clearAllData();
+                              setStorageSetup(false);
+                              toast.success('Command Center reset to factory settings');
+                            }
+                          },
+                          cancel: { label: 'Cancel' }
+                        });
                       }}
                       style={{
                         display: 'flex',
