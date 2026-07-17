@@ -119,20 +119,19 @@ export default function Home() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'var(--dark-navy)',
+        background: 'var(--bg-primary)',
         color: 'var(--text-primary)',
-        fontFamily: 'var(--font-display)',
+        fontFamily: 'var(--font-sans)',
         fontSize: '2rem',
         fontWeight: 800,
-        letterSpacing: '-1px',
+        letterSpacing: '1px',
       }}>
-        <span style={{
-          background: 'linear-gradient(135deg, #00A3E0, #A855F7)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-        }}>
-          APEX
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          SUK
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="var(--primary)" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '0 -2px 0 2px' }}><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="var(--primary)" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '0 2px 0 -2px' }}><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          N
+        </div>
       </div>
     );
   }
