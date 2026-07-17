@@ -3,7 +3,7 @@ import useSettingsStore from '@/stores/useSettingsStore';
 import useTaskStore from '@/stores/useTaskStore';
 import { VIEWS, QUADRANTS } from '@/lib/constants';
 import { hasStorageSetup } from '@/lib/storage';
-import { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, HardDrive, Settings, Download, List, X, BookOpen, Trash2 } from 'lucide-react';
+import { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, HardDrive, Settings, Download, List, X, BookOpen, Trash2, Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const ICON_MAP = { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, List, BookOpen };
@@ -22,6 +22,7 @@ export default function Sidebar() {
   const setView = useSettingsStore(s => s.setView);
   const storageReady = useSettingsStore(s => s.storageReady);
   const setStorageSetup = useSettingsStore(s => s.setStorageSetup);
+  const toggleQuickAdd = useSettingsStore(s => s.toggleQuickAdd);
   const filterTag = useSettingsStore(s => s.filterTag);
   const setFilterTag = useSettingsStore(s => s.setFilterTag);
   const hiddenTags = useSettingsStore(s => s.hiddenTags);
@@ -127,6 +128,13 @@ export default function Sidebar() {
 
     {/* Mobile Bottom Navigation */}
     <nav className="mobile-bottom-nav">
+      <button 
+        className="mobile-nav-item"
+        onClick={() => toggleQuickAdd()}
+      >
+        <Plus size={20} />
+        <span>Add Task</span>
+      </button>
       <button 
         className={`mobile-nav-item ${activeView === 'briefing' ? 'active' : ''}`}
         onClick={() => setView('briefing')}
