@@ -158,7 +158,7 @@ export default function Analytics() {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-6)' }}>
+        <div className="analytics-header-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-6)' }}>
           <div>
             <h2 style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', margin: 0, fontSize: '1.4rem' }}>
               <BarChart3 size={24} style={{ color: 'var(--db-bright-blue)' }} />
@@ -283,6 +283,7 @@ export default function Analytics() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
+                className="analytics-impact-row"
                 style={{
                   background: 'var(--surface-elevated)',
                   border: '1px solid var(--border-subtle)',
@@ -291,6 +292,7 @@ export default function Analytics() {
                 }}
               >
                 <div 
+                  className="impact-row-header"
                   style={{ 
                     padding: 'var(--space-4)', 
                     display: 'flex', 

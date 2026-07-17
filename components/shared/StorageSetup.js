@@ -71,10 +71,10 @@ export default function StorageSetup() {
         </div>
 
         {/* Body Layout */}
-        <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+        <div className="settings-layout" style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
           
           {/* Sidebar */}
-          <div style={{ 
+          <div className="settings-sidebar" style={{ 
             width: '200px', 
             borderRight: '1px solid var(--border-subtle)', 
             padding: 'var(--space-4)',

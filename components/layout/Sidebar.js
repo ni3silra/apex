@@ -37,6 +37,7 @@ export default function Sidebar() {
     .sort();
 
   return (
+    <>
     <aside className="sidebar">
       {/* Logo */}
       <div className="sidebar-header">
@@ -123,5 +124,38 @@ export default function Sidebar() {
         </button>
       </div>
     </aside>
+
+    {/* Mobile Bottom Navigation */}
+    <nav className="mobile-bottom-nav">
+      <button 
+        className={`mobile-nav-item ${activeView === 'briefing' ? 'active' : ''}`}
+        onClick={() => setView('briefing')}
+      >
+        <LayoutDashboard size={20} />
+        <span>Home</span>
+      </button>
+      <button 
+        className={`mobile-nav-item ${activeView === 'matrix' ? 'active' : ''}`}
+        onClick={() => setView('matrix')}
+      >
+        <Grid2x2 size={20} />
+        <span>Tasks</span>
+      </button>
+      <button 
+        className={`mobile-nav-item ${activeView === 'analytics' ? 'active' : ''}`}
+        onClick={() => setView('analytics')}
+      >
+        <BarChart3 size={20} />
+        <span>Stats</span>
+      </button>
+      <button 
+        className="mobile-nav-item"
+        onClick={() => setStorageSetup(true)}
+      >
+        <Settings size={20} />
+        <span>Settings</span>
+      </button>
+    </nav>
+    </>
   );
 }

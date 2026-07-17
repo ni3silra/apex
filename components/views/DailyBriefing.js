@@ -184,7 +184,7 @@ export default function DailyBriefing() {
           WEEKLY PROGRESS
         </div>
         <div className="briefing-velocity">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+          <div className="velocity-stats-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
             <span style={{ fontSize: '1.1rem', fontWeight: 600 }}>
               {weeklyCompleted} tasks completed
             </span>

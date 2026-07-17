@@ -64,7 +64,7 @@ export default function FocusMode() {
             Select a duration and a task to start a deep work session.
           </p>
 
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-8)' }}>
+          <div className="focus-duration-selector" style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-8)' }}>
             {[5, 10, 15, 20, 25].map(mins => (
               <button
                 key={mins}
@@ -82,7 +82,7 @@ export default function FocusMode() {
           </div>
 
           {/* History & Stats Banner */}
-          <div style={{
+          <div className="focus-stats-banner" style={{
             background: 'var(--surface-elevated)',
             padding: 'var(--space-4)',
             borderRadius: 'var(--radius-lg)',
