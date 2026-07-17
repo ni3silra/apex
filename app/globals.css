@@ -995,6 +995,9 @@ input, textarea, select { font-family: inherit; color: inherit; color-scheme: in
   border-radius: var(--radius-lg);
   padding: var(--space-5);
 }
+.impact-analysis-card {
+  grid-column: span 4;
+}
 .analytics-card-title {
   font-size: 0.82rem;
   color: var(--text-secondary);
@@ -1522,9 +1525,32 @@ input, textarea, select { font-family: inherit; color: inherit; color-scheme: in
   .analytics-grid {
     grid-template-columns: 1fr;
   }
+  .impact-analysis-card {
+    grid-column: span 1 !important;
+  }
 }
 
 @media (max-width: 768px) {
+  /* Analytics Mobile Overrides */
+  .analytics-header-inner {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: var(--space-4) !important;
+  }
+  .analytics-header-inner > div:last-child {
+    flex-wrap: wrap;
+  }
+  
+  .impact-row-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: var(--space-4) !important;
+  }
+  .impact-row-header > div:last-child {
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .sidebar {
     display: none !important;
   }
@@ -1735,6 +1761,8 @@ input, textarea, select { font-family: inherit; color: inherit; color-scheme: in
   }
   .topbar-search {
     max-width: none !important;
+    width: 100%;
+    margin-top: var(--space-3);
   }
   .topbar-filters {
     margin-left: 0 !important;
@@ -1752,6 +1780,9 @@ input, textarea, select { font-family: inherit; color: inherit; color-scheme: in
 
 @media (min-width: 769px) {
   .mobile-bottom-nav {
+    display: none !important;
+  }
+  .mobile-only {
     display: none !important;
   }
 }

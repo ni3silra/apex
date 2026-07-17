@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import useSettingsStore from '@/stores/useSettingsStore';
 import useTaskStore from '@/stores/useTaskStore';
-import { Search, Command, Plus, Keyboard, Sun, Moon, BookOpen, Menu, X, Activity } from 'lucide-react';
+import { Search, Command, Plus, Keyboard, Sun, Moon, BookOpen, Menu, X, Activity, Settings } from 'lucide-react';
 
 export default function TopBar() {
   const searchQuery = useSettingsStore(s => s.searchQuery);
@@ -15,6 +15,7 @@ export default function TopBar() {
   const theme = useSettingsStore(s => s.theme);
   const setTheme = useSettingsStore(s => s.setTheme);
   const setView = useSettingsStore(s => s.setView);
+  const setStorageSetup = useSettingsStore(s => s.setStorageSetup);
   const tasks = useTaskStore(s => s.tasks);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -36,24 +37,26 @@ export default function TopBar() {
           <Activity size={20} style={{ color: 'var(--db-bright-blue)' }} />
           <span>Apex</span>
         </div>
-        <button className="btn-icon mobile-menu-btn" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        <button className="btn-ghost mobile-menu-btn" style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '4px 8px', borderRadius: 'var(--radius-md)', color: 'var(--text-secondary)' }} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>Menu</span>
         </button>
+      </div>
+
+      {/* Search (Always visible) */}
+      <div className="topbar-search">
+        <Search size={16} style={{ color: 'var(--neutral-500)', flexShrink: 0 }} />
+        <input
+          type="text"
+          placeholder="Search tasks..."
+          value={searchQuery}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <span className="topbar-search-hint desktop-only">Ctrl+K</span>
       </div>
 
       {/* Main Topbar Content */}
       <div className={`topbar-content ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
-        {/* Search */}
-        <div className="topbar-search">
-          <Search size={16} style={{ color: 'var(--neutral-500)', flexShrink: 0 }} />
-          <input
-            type="text"
-            placeholder="Search tasks..."
-            value={searchQuery}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <span className="topbar-search-hint desktop-only">Ctrl+K</span>
-        </div>
 
         {/* Status Filters */}
         <div className="topbar-filters" style={{ display: 'flex', gap: 'var(--space-2)', marginLeft: 'auto', marginRight: 'var(--space-4)' }}>
@@ -84,6 +87,9 @@ export default function TopBar() {
 
         {/* Actions */}
         <div className="topbar-actions">
+          <button className="btn-icon mobile-only" onClick={() => { setStorageSetup(true); setIsMobileMenuOpen(false); }} title="Settings">
+            <Settings size={18} />
+          </button>
           <button className="btn-icon" onClick={() => { setView('guide'); setIsMobileMenuOpen(false); }} title="Open Guide">
             <BookOpen size={18} />
           </button>

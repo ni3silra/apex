@@ -148,13 +148,6 @@ export default function Sidebar() {
         <BarChart3 size={20} />
         <span>Stats</span>
       </button>
-      <button 
-        className="mobile-nav-item"
-        onClick={() => setStorageSetup(true)}
-      >
-        <Settings size={20} />
-        <span>Settings</span>
-      </button>
     </nav>
     </>
   );

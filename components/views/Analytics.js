@@ -262,11 +262,11 @@ export default function Analytics() {
         </motion.div>
         {/* Impact Analysis Section */}
         <motion.div
-          className="analytics-card"
+          className="analytics-card impact-analysis-card"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          style={{ gridColumn: 'span 4', maxHeight: '400px', overflowY: 'auto', paddingRight: '12px' }}
+          style={{ maxHeight: '400px', overflowY: 'auto', paddingRight: '12px' }}
         >
         <div className="analytics-card-title" style={{ marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Activity size={18} style={{ color: 'var(--primary)' }} />
