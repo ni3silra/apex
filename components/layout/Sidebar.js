@@ -3,7 +3,7 @@ import useSettingsStore from '@/stores/useSettingsStore';
 import useTaskStore from '@/stores/useTaskStore';
 import { VIEWS, QUADRANTS } from '@/lib/constants';
 import { hasStorageSetup } from '@/lib/storage';
-import { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, HardDrive, Settings, Download, List } from 'lucide-react';
+import { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, HardDrive, Settings, Download, List, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const ICON_MAP = { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, List };
@@ -20,11 +20,19 @@ export default function Sidebar() {
   const setView = useSettingsStore(s => s.setView);
   const storageReady = useSettingsStore(s => s.storageReady);
   const setStorageSetup = useSettingsStore(s => s.setStorageSetup);
+  const filterTag = useSettingsStore(s => s.filterTag);
+  const setFilterTag = useSettingsStore(s => s.setFilterTag);
+  const hiddenTags = useSettingsStore(s => s.hiddenTags);
+  const hideTag = useSettingsStore(s => s.hideTag);
   const tasks = useTaskStore(s => s.tasks);
 
   const activeTasks = tasks.filter(t => t.status !== 'done');
   const completedTasks = tasks.filter(t => t.status === 'done');
   const overdueTasks = tasks.filter(t => t.deadline && new Date(t.deadline) < new Date() && t.status !== 'done');
+
+  const uniqueTags = Array.from(new Set(tasks.flatMap(t => t.tags || [])))
+    .filter(t => !hiddenTags.includes(t))
+    .sort();
 
   return (
     <aside className="sidebar">
@@ -56,47 +64,53 @@ export default function Sidebar() {
             </button>
           );
         })}
-
-        <div className="sidebar-section-title" style={{ marginTop: 'var(--space-4)' }}>Quadrants</div>
-        {Object.values(QUADRANTS).map(q => (
-          <button
-            key={q.id}
-            className="sidebar-nav-item"
-            onClick={() => {
-              setView('matrix');
-            }}
-          >
-            <div style={{
-              width: 10,
-              height: 10,
-              borderRadius: '50%',
-              background: q.color,
-              flexShrink: 0,
-            }} />
-            {q.label}
-            <span className="sidebar-nav-shortcut">
-              {tasks.filter(t => t.quadrant === q.id && t.status !== 'done').length}
-            </span>
-          </button>
-        ))}
       </nav>
 
-      {/* Stats */}
-      <div className="sidebar-stats">
-        <div className="sidebar-stat">
-          <span className="sidebar-stat-label">Active</span>
-          <span className="sidebar-stat-value" style={{ color: 'var(--db-bright-blue)' }}>{activeTasks.length}</span>
-        </div>
-        <div className="sidebar-stat">
-          <span className="sidebar-stat-label">Done</span>
-          <span className="sidebar-stat-value" style={{ color: 'var(--f1-green)' }}>{completedTasks.length}</span>
-        </div>
-        <div className="sidebar-stat">
-          <span className="sidebar-stat-label">Overdue</span>
-          <span className="sidebar-stat-value" style={{ color: overdueTasks.length > 0 ? 'var(--f1-red)' : 'var(--neutral-500)' }}>
-            {overdueTasks.length}
-          </span>
-        </div>
+      {/* Tags */}
+      <div className="sidebar-section-title" style={{ marginTop: 'var(--space-4)' }}>Tags</div>
+      <div style={{ padding: '0 var(--space-2)', display: 'flex', flexDirection: 'column', gap: '2px', overflowY: 'auto' }}>
+        {uniqueTags.map(tag => (
+          <div
+            key={tag}
+            className={`sidebar-nav-item ${filterTag === tag ? 'active' : ''}`}
+            style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center',
+              padding: 'var(--space-1) var(--space-3)',
+              fontSize: '0.82rem',
+              minHeight: '30px'
+            }}
+          >
+            <div 
+              style={{ flex: 1, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+              onClick={() => {
+                setFilterTag(filterTag === tag ? null : tag);
+                if (activeView !== 'matrix') {
+                  setView('matrix');
+                }
+              }}
+            >
+              <div style={{ color: 'var(--text-secondary)', marginRight: 'var(--space-2)' }}>#</div>
+              {tag}
+            </div>
+            <button 
+              className="btn-icon" 
+              style={{ padding: 2, opacity: 0.5 }}
+              onClick={(e) => { e.stopPropagation(); hideTag(tag); }}
+              title="Hide tag from sidebar"
+            >
+              <X size={12} />
+            </button>
+          </div>
+        ))}
+        {uniqueTags.length === 0 && <div style={{ padding: 'var(--space-2) var(--space-4)', fontSize: '0.8rem', color: 'var(--neutral-500)', fontStyle: 'italic' }}>No tags yet</div>}
+      </div>
+
+      <div style={{ marginTop: 'auto' }}>
+        <button className="btn btn-ghost" style={{ width: '100%', margin: 'var(--space-2) 0', fontSize: '0.8rem', opacity: 0.6 }} onClick={() => useTaskStore.getState().generateDummyData()}>
+          Generate Dummy Data
+        </button>
       </div>
 
       {/* Storage indicator */}

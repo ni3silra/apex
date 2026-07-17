@@ -20,6 +20,7 @@ import StorageSetup from '@/components/shared/StorageSetup';
 
 export default function Home() {
   const activeView = useSettingsStore(s => s.activeView);
+  const theme = useSettingsStore(s => s.theme);
   const showQuickAdd = useSettingsStore(s => s.showQuickAdd);
   const showCommandPalette = useSettingsStore(s => s.showCommandPalette);
   const showShortcuts = useSettingsStore(s => s.showShortcuts);
@@ -29,6 +30,11 @@ export default function Home() {
   const setStorageSetup = useSettingsStore(s => s.setStorageSetup);
   const focusIsActive = useFocusStore(s => s.isActive);
   const [ready, setReady] = useState(false);
+
+  // Apply theme
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme || 'dark');
+  }, [theme]);
 
   // Initialize app
   useEffect(() => {

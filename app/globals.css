@@ -5,6 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
+  color-scheme: dark;
   /* Enterprise Slate Dark Theme */
   --dark-navy: #000000;
   --surface: #121212;
@@ -38,6 +39,14 @@
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-medium: rgba(255, 255, 255, 0.15);
   --border-strong: rgba(255, 255, 255, 0.25);
+
+  /* Cosmos Background Colors */
+  --star-strong: rgba(255, 255, 255, 1);
+  --star-medium: rgba(255, 255, 255, 0.8);
+  --star-faint: rgba(255, 255, 255, 0.5);
+
+  /* Task Card Background */
+  --task-card-bg: rgba(17, 22, 56, 0.5);
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
@@ -81,21 +90,68 @@
   --topbar-height: 64px;
 }
 
+:root[data-theme="light"] {
+  color-scheme: light;
+  --dark-navy: #EBF3FA;
+  --surface: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --surface-hover: #DCE8F5;
+  --surface-active: #C8DAED;
+
+  /* Text mapping */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+
+  /* Border mapping */
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-medium: rgba(0, 0, 0, 0.15);
+  --border-strong: rgba(0, 0, 0, 0.25);
+
+  /* Shadows for light mode */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+
+  /* Cosmos Background Colors */
+  --star-strong: rgba(0, 0, 0, 0.2);
+  --star-medium: rgba(0, 0, 0, 0.15);
+  --star-faint: rgba(0, 0, 0, 0.1);
+
+  /* Task Card Background */
+  --task-card-bg: rgba(0, 163, 224, 0.08); /* faint db-bright-blue tint */
+}
+
 /* ─── Reset ────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 14px; }
 body {
   font-family: var(--font-sans);
   background: var(--dark-navy);
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, var(--star-strong), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 40px 70px, var(--star-strong), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 50px 160px, var(--star-medium), rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 90px 40px, var(--star-medium), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 130px 80px, var(--star-faint), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 160px 120px, var(--star-strong), rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: cosmosDrift 100s linear infinite;
   color: var(--text-primary);
   line-height: 1.6;
   overflow: hidden;
   height: 100dvh;
 }
+
+@keyframes cosmosDrift {
+  from { background-position: 0 0; }
+  to { background-position: -400px -400px; }
+}
 a { color: var(--db-bright-blue); text-decoration: none; }
 a:hover { text-decoration: underline; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
-input, textarea, select { font-family: inherit; color: inherit; }
+input, textarea, select { font-family: inherit; color: inherit; color-scheme: inherit; }
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--neutral-600); border-radius: var(--radius-full); }
@@ -462,7 +518,7 @@ input, textarea, select { font-family: inherit; color: inherit; }
 
 /* ─── Task Card ────────────────────────────────────────────── */
 .task-card {
-  background: rgba(17, 22, 56, 0.5);
+  background: var(--task-card-bg);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
@@ -482,11 +538,11 @@ input, textarea, select { font-family: inherit; color: inherit; }
   transform: rotate(2deg);
 }
 .task-card.done {
-  opacity: 0.5;
+  opacity: 0.85;
 }
 .task-card.done .task-card-title {
   text-decoration: line-through;
-  color: var(--neutral-500);
+  color: var(--text-secondary);
 }
 
 .task-card-top {

@@ -87,15 +87,27 @@ export default function EisenhowerMatrix() {
     })
   );
 
+  const filterStatus = useSettingsStore(s => s.filterStatus);
+  const filterTag = useSettingsStore(s => s.filterTag);
+
   const filteredTasks = useMemo(() => {
-    if (!searchQuery) return tasks;
-    const q = searchQuery.toLowerCase();
-    return tasks.filter(t =>
-      t.title.toLowerCase().includes(q) ||
-      t.tags?.some(tag => tag.toLowerCase().includes(q)) ||
-      t.contacts?.some(c => c.name.toLowerCase().includes(q))
-    );
-  }, [tasks, searchQuery]);
+    let result = tasks;
+    if (filterStatus === 'active') result = result.filter(t => t.status !== 'done');
+    else if (filterStatus === 'done') result = result.filter(t => t.status === 'done');
+    else if (filterStatus === 'overdue') result = result.filter(t => t.deadline && new Date(t.deadline) < new Date() && t.status !== 'done');
+
+    if (filterTag) result = result.filter(t => t.tags && t.tags.includes(filterTag));
+
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(t =>
+        t.title.toLowerCase().includes(q) ||
+        t.tags?.some(tag => tag.toLowerCase().includes(q)) ||
+        t.contacts?.some(c => c.name.toLowerCase().includes(q))
+      );
+    }
+    return result;
+  }, [tasks, searchQuery, filterStatus, filterTag]);
 
   function handleDragStart(event) {
     setActiveId(event.active.id);

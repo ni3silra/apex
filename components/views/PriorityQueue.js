@@ -2,19 +2,31 @@
 import { useMemo } from 'react';
 import useTaskStore from '@/stores/useTaskStore';
 import useSettingsStore from '@/stores/useSettingsStore';
+import useFocusStore from '@/stores/useFocusStore';
 import { rankTasks, getPriorityColor } from '@/lib/priorities';
 import { getDeadlineStatus } from '@/lib/utils';
 import { QUADRANTS } from '@/lib/constants';
 import { motion, AnimatePresence } from 'framer-motion';
-import { List, Clock, MessageSquare, Paperclip, Users, ChevronRight } from 'lucide-react';
+import { List, Clock, MessageSquare, Paperclip, Users, ChevronRight, Play } from 'lucide-react';
 
 export default function PriorityQueue() {
   const tasks = useTaskStore(s => s.tasks);
   const selectTask = useSettingsStore(s => s.selectTask);
   const searchQuery = useSettingsStore(s => s.searchQuery);
+  const filterStatus = useSettingsStore(s => s.filterStatus);
+  const filterTag = useSettingsStore(s => s.filterTag);
+  const setView = useSettingsStore(s => s.setView);
+  const startFocus = useFocusStore(s => s.startFocus);
+  const setWorkMinutes = useFocusStore(s => s.setWorkMinutes);
 
   const ranked = useMemo(() => {
     let r = rankTasks(tasks);
+    if (filterStatus === 'active') r = r.filter(t => t.status !== 'done');
+    else if (filterStatus === 'done') r = r.filter(t => t.status === 'done');
+    else if (filterStatus === 'overdue') r = r.filter(t => t.deadline && new Date(t.deadline) < new Date() && t.status !== 'done');
+    
+    if (filterTag) r = r.filter(t => t.tags && t.tags.includes(filterTag));
+    
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       r = r.filter(t =>
@@ -23,7 +35,7 @@ export default function PriorityQueue() {
       );
     }
     return r;
-  }, [tasks, searchQuery]);
+  }, [tasks, searchQuery, filterStatus, filterTag]);
 
   return (
     <div className="priority-queue">
@@ -102,11 +114,29 @@ export default function PriorityQueue() {
                   </div>
                 </div>
 
+                <div style={{ display: 'flex', gap: '4px', marginRight: 'var(--space-2)' }} className="queue-focus-actions">
+                  {[5, 15, 25].map(mins => (
+                    <button
+                      key={mins}
+                      className="btn btn-ghost"
+                      style={{ padding: '2px 6px', fontSize: '0.7rem', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)' }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setWorkMinutes(mins);
+                        startFocus(task.id);
+                        setView('focus');
+                      }}
+                      title={`Start ${mins}m focus`}
+                    >
+                      <Play size={10} style={{ marginRight: '2px' }} /> {mins}m
+                    </button>
+                  ))}
+                </div>
+
                 {/* Priority Score Bubble */}
                 <div style={{
-                  background: 'var(--surface-elevated)',
-                  padding: '4px 12px',
-                  borderRadius: 'var(--radius-full)',
+                  padding: 'var(--space-1) var(--space-2)',
+                  borderRadius: 'var(--radius-md)',
                   fontSize: '0.85rem',
                   fontWeight: 600,
                   color: priorityColor,

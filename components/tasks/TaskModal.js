@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import useTaskStore from '@/stores/useTaskStore';
 import useSettingsStore from '@/stores/useSettingsStore';
 import useAnalyticsStore from '@/stores/useAnalyticsStore';
-import { QUADRANTS, TASK_STATUSES } from '@/lib/constants';
+import { QUADRANTS, TASK_STATUSES, IMPACT_LEVELS } from '@/lib/constants';
 import { getDeadlineStatus, formatDeadline, getInitials, generateColor } from '@/lib/utils';
 import { format } from 'date-fns';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -14,7 +14,7 @@ import ReactMarkdown from 'react-markdown';
 import {
   X, Calendar, Tag, Users, Paperclip, MessageSquare, Clock,
   Plus, Trash2, ExternalLink, Link, FileText, Image, Video, Code,
-  Check, Target, Mic, Upload
+  Check, CheckCircle2, Target, Mic, Upload, Activity
 } from 'lucide-react';
 
 const ATTACH_ICON_MAP = { link: Link, document: FileText, image: Image, video: Video, code: Code };
@@ -198,6 +198,97 @@ export default function TaskModal({ taskId }) {
             </div>
 
             {/* Body */}
+            {task.status === 'done' ? (() => {
+              const timeToComplete = task.completedAt && task.createdAt
+                ? (() => {
+                    const ms = new Date(task.completedAt) - new Date(task.createdAt);
+                    const hours = Math.round(ms / (1000 * 60 * 60));
+                    const days = Math.round(ms / (1000 * 60 * 60 * 24));
+                    if (hours < 1) return 'Less than an hour';
+                    if (hours < 24) return `${hours} hour${hours !== 1 ? 's' : ''}`;
+                    return `${days} day${days !== 1 ? 's' : ''}`;
+                  })()
+                : 'Unknown';
+
+              return (
+              <div className="task-modal-body" style={{ background: 'var(--surface-elevated)', overflowY: 'auto', maxHeight: 'calc(85vh - 120px)' }}>
+                <div style={{ padding: 'var(--space-6)', textAlign: 'center', borderBottom: '1px solid var(--border-subtle)' }}>
+                  <CheckCircle2 size={48} style={{ color: 'var(--success)', margin: '0 auto var(--space-4)' }} />
+                  <h2 style={{ margin: '0 0 var(--space-2) 0', fontSize: '1.5rem', color: 'var(--text-primary)' }}>{task.title}</h2>
+                  <p style={{ color: 'var(--text-secondary)', margin: 0, fontSize: '0.9rem' }}>
+                    Completed on {task.completedAt ? format(new Date(task.completedAt), 'MMM d, yyyy h:mm a') : 'Unknown Date'}
+                  </p>
+                </div>
+                <div style={{ padding: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
+                  {task.description && (
+                    <div>
+                      <h4 style={{ margin: '0 0 var(--space-2) 0', color: 'var(--text-secondary)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Description</h4>
+                      <div style={{ color: 'var(--text-primary)', lineHeight: 1.5 }}><ReactMarkdown>{task.description}</ReactMarkdown></div>
+                    </div>
+                  )}
+                  
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)' }}>
+                    <div>
+                      <h4 style={{ margin: '0 0 var(--space-2) 0', color: 'var(--text-secondary)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Details</h4>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', fontSize: '0.9rem', color: 'var(--text-primary)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}><Tag size={14}/> {QUADRANTS[task.quadrant]?.label}</div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}><Activity size={14}/> Impact: {task.impact || 'Medium'}</div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}><Clock size={14}/> Time to Complete: {timeToComplete}</div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}><Target size={14}/> Focus Time: {task.focusTime || 0} mins</div>
+                        {task.deadline && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}><Calendar size={14}/> Deadline: {format(new Date(task.deadline), 'MMM d, yyyy')}</div>}
+                      </div>
+                    </div>
+
+                    {task.tags?.length > 0 && (
+                      <div>
+                        <h4 style={{ margin: '0 0 var(--space-2) 0', color: 'var(--text-secondary)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Tags</h4>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-1)' }}>
+                          {task.tags.map(tag => (
+                            <span key={tag} style={{ padding: '2px 8px', background: 'var(--surface)', borderRadius: '12px', fontSize: '0.8rem', color: 'var(--primary)' }}>#{tag}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {task.notes?.length > 0 && (
+                    <div>
+                      <h4 style={{ margin: '0 0 var(--space-2) 0', color: 'var(--text-secondary)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Notes</h4>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+                        {task.notes.map(note => (
+                          <div key={note.id} style={{ background: 'var(--surface)', padding: 'var(--space-3)', borderRadius: 'var(--radius-md)' }}>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--neutral-500)', marginBottom: 'var(--space-1)' }}>{format(new Date(note.createdAt), 'MMM d, h:mm a')}</div>
+                            <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)' }}><ReactMarkdown>{note.content}</ReactMarkdown></div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {links.length > 0 && (
+                    <div>
+                      <h4 style={{ margin: '0 0 var(--space-2) 0', color: 'var(--text-secondary)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Links</h4>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+                        {links.map(att => (
+                          <a key={att.id} href={att.url} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', padding: 'var(--space-2)', background: 'var(--surface)', borderRadius: 'var(--radius-md)', textDecoration: 'none', color: 'var(--text-primary)' }}>
+                            <Link size={14} style={{ color: 'var(--primary)' }} />
+                            <span style={{ flex: 1, fontSize: '0.9rem' }}>{att.title || att.url}</span>
+                            <ExternalLink size={14} style={{ color: 'var(--neutral-500)' }} />
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div style={{ marginTop: 'var(--space-4)', textAlign: 'center' }}>
+                    <button className="btn btn-ghost" onClick={() => handleStatusChange('in_progress')}>
+                      <Target size={14} style={{ marginRight: 6 }} /> Mark Active Again
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+            })() : (
             <div className="task-modal-body">
               {/* Title */}
               <div style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center' }}>
@@ -256,6 +347,24 @@ export default function TaskModal({ taskId }) {
                       {q.label}
                     </button>
                   ))}
+                </div>
+              </div>
+
+              {/* Impact */}
+              <div className="task-modal-field">
+                <div className="task-modal-field-label"><Activity size={13} /> Impact</div>
+                <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+                  <input 
+                    list="impact-options" 
+                    className="task-modal-input" 
+                    value={task.impact || ''}
+                    onChange={(e) => updateTask(taskId, { impact: e.target.value })}
+                    placeholder="e.g. Very High, High, Custom..."
+                    style={{ flex: 1 }}
+                  />
+                  <datalist id="impact-options">
+                    {IMPACT_LEVELS.map(lvl => <option key={lvl} value={lvl} />)}
+                  </datalist>
                 </div>
               </div>
 
@@ -524,7 +633,7 @@ export default function TaskModal({ taskId }) {
                 Created {format(new Date(task.createdAt), 'MMM d, yyyy h:mm a')}
                 {task.updatedAt && ` · Updated ${format(new Date(task.updatedAt), 'MMM d h:mm a')}`}
               </div>
-            </div>
+            </div>)}
           </motion.div>
         </Dialog.Content>
       </Dialog.Portal>

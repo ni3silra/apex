@@ -33,6 +33,20 @@ export default function QuickAdd() {
     toggleQuickAdd();
   };
 
+  const handleFullDetails = () => {
+    let parsed = { title: 'New Task', quadrant: 'q2' };
+    if (input.trim()) {
+      parsed = parseTaskInput(input);
+      if (!parsed.title) parsed.title = 'New Task';
+    }
+    
+    const newTask = addTask(parsed);
+    recordTaskAdded();
+    setInput('');
+    toggleQuickAdd();
+    useSettingsStore.getState().selectTask(newTask.id);
+  };
+
   return (
     <div className="quick-add-overlay animate-fade-in" onClick={toggleQuickAdd}>
       <motion.div
@@ -55,6 +69,9 @@ export default function QuickAdd() {
             />
             <button type="submit" className="btn btn-primary" disabled={!input.trim()}>
               <Plus size={16} /> Add
+            </button>
+            <button type="button" className="btn btn-ghost" onClick={handleFullDetails} style={{ padding: 'var(--space-2)' }}>
+              Full Details
             </button>
           </div>
         </form>

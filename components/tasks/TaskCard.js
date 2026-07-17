@@ -5,9 +5,10 @@ import useTaskStore from '@/stores/useTaskStore';
 import useSettingsStore from '@/stores/useSettingsStore';
 import { QUADRANTS } from '@/lib/constants';
 import { getDeadlineStatus, getInitials, generateColor } from '@/lib/utils';
-import { Clock, MessageSquare, Paperclip, GripVertical } from 'lucide-react';
+import { Clock, MessageSquare, Paperclip, GripVertical, Play } from 'lucide-react';
 import * as Checkbox from '@radix-ui/react-checkbox';
 import { Check } from 'lucide-react';
+import useFocusStore from '@/stores/useFocusStore';
 
 export default function TaskCard({ task, isDragOverlay = false }) {
   const selectTask = useSettingsStore(s => s.selectTask);
@@ -68,7 +69,23 @@ export default function TaskCard({ task, isDragOverlay = false }) {
         </Checkbox.Root>
 
         {/* Title */}
-        <span className="task-card-title">{task.title}</span>
+        <span className="task-card-title" style={{ flex: 1 }}>{task.title}</span>
+
+        {/* Focus Action */}
+        {task.status !== 'done' && (
+          <button
+            className="btn-icon"
+            style={{ width: 20, height: 20, color: 'var(--text-muted)' }}
+            onClick={(e) => {
+              e.stopPropagation();
+              useFocusStore.getState().startFocus(task.id);
+              useSettingsStore.getState().setView('focus');
+            }}
+            title="Start Focus Mode"
+          >
+            <Play size={14} />
+          </button>
+        )}
       </div>
 
       {/* Meta row */}

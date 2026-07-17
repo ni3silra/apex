@@ -81,6 +81,46 @@ export default function FocusMode() {
             ))}
           </div>
 
+          {/* History & Stats Banner */}
+          <div style={{
+            background: 'var(--surface-elevated)',
+            padding: 'var(--space-4)',
+            borderRadius: 'var(--radius-lg)',
+            display: 'flex',
+            justifyContent: 'space-around',
+            marginBottom: 'var(--space-8)',
+            border: '1px solid var(--border-subtle)'
+          }}>
+            <div>
+              <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--db-bright-blue)' }}>
+                {tasks.reduce((acc, t) => {
+                  if (t.completedAt && new Date(t.completedAt).toDateString() === new Date().toDateString()) {
+                    return acc + (t.focusTime || 0);
+                  }
+                  return acc;
+                }, 0)}m
+              </div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Focused Today</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--f1-green)' }}>
+                {tasks.reduce((acc, t) => {
+                  if (t.completedAt && new Date(t.completedAt).getTime() > new Date().getTime() - 7 * 86400000) {
+                    return acc + (t.focusTime || 0);
+                  }
+                  return acc;
+                }, 0)}m
+              </div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Focused This Week</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--danger)' }}>
+                {tasks.filter(t => t.status !== 'done' && t.deadline && new Date(t.deadline) < new Date()).length}
+              </div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Overdue Tasks</div>
+            </div>
+          </div>
+
           {topTask && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
