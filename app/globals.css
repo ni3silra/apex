@@ -1,55 +1,48 @@
 /* ═══════════════════════════════════════════════════════════════
-   APEX Design System — Deutsche Bank × F1 Racing
+   APEX Design System — Enterprise UI
    ═══════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* Deutsche Bank Palette */
+  /* Enterprise Slate Dark Theme */
+  --dark-navy: #000000;
+  --surface: #121212;
+  --surface-elevated: #1E1E1E;
+  --surface-hover: #2A2A2A;
+  --surface-active: #333333;
+
+  /* Semantic Colors */
   --db-blue: #0018A8;
-  --db-blue-light: #1a32c0;
   --db-bright-blue: #00A3E0;
-
-  /* Dark Theme */
-  --dark-navy: #0A0E27;
-  --surface: #111638;
-  --surface-elevated: #1A1F4A;
-  --surface-hover: #222860;
-  --surface-active: #2a3070;
-
-  /* F1 Racing Colors */
-  --f1-purple: #A855F7;
-  --f1-green: #22C55E;
-  --f1-yellow: #FACC15;
-  --f1-red: #EF4444;
-  --f1-purple-dim: rgba(168, 85, 247, 0.15);
-  --f1-green-dim: rgba(34, 197, 94, 0.15);
-  --f1-yellow-dim: rgba(250, 204, 21, 0.15);
-  --f1-red-dim: rgba(239, 68, 68, 0.15);
+  --primary: #58A6FF;
+  --success: #3FB950;
+  --warning: #D29922;
+  --danger: #F85149;
 
   /* Neutrals */
   --neutral-50: #F8FAFC;
   --neutral-100: #F1F5F9;
   --neutral-200: #E2E8F0;
   --neutral-300: #CBD5E1;
-  --neutral-400: #94A3B8;
-  --neutral-500: #64748B;
-  --neutral-600: #475569;
-  --neutral-700: #334155;
-  --neutral-800: #1E293B;
+  --neutral-400: #8B949E;
+  --neutral-500: #6E7681;
+  --neutral-600: #484F58;
+  --neutral-700: #21262D;
+  --neutral-800: #161B22;
 
-  /* Semantic */
+  /* Semantic Variables */
   --text-primary: var(--neutral-100);
   --text-secondary: var(--neutral-400);
   --text-muted: var(--neutral-500);
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-medium: rgba(255, 255, 255, 0.12);
-  --border-strong: rgba(255, 255, 255, 0.2);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-strong: rgba(255, 255, 255, 0.25);
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --font-display: 'Outfit', var(--font-sans);
+  --font-display: 'Inter', var(--font-sans);
 
   /* Spacing */
   --space-1: 4px;
@@ -63,24 +56,24 @@
   --space-12: 48px;
 
   /* Radius */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
-  --shadow-glow-blue: 0 0 20px rgba(0, 24, 168, 0.3);
-  --shadow-glow-purple: 0 0 20px rgba(168, 85, 247, 0.3);
-  --shadow-glow-red: 0 0 15px rgba(239, 68, 68, 0.2);
+  /* Shadows - softened for enterprise */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
+  --shadow-glow-blue: 0 0 15px rgba(88, 166, 255, 0.15);
+  --shadow-glow-purple: 0 0 15px rgba(210, 153, 34, 0.15);
+  --shadow-glow-red: 0 0 15px rgba(248, 81, 73, 0.15);
 
   /* Transitions */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
 
   /* Sidebar */
   --sidebar-width: 260px;
@@ -153,12 +146,9 @@ input, textarea, select { font-family: inherit; color: inherit; }
 
 .sidebar-logo {
   font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--db-bright-blue), var(--f1-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
   letter-spacing: -0.5px;
 }
 
@@ -257,8 +247,8 @@ input, textarea, select { font-family: inherit; color: inherit; }
   border-radius: 50%;
   flex-shrink: 0;
 }
-.storage-dot.connected { background: var(--f1-green); box-shadow: 0 0 6px var(--f1-green); }
-.storage-dot.disconnected { background: var(--f1-yellow); }
+.storage-dot.connected { background: var(--success); box-shadow: 0 0 6px var(--success); }
+.storage-dot.disconnected { background: var(--warning); }
 
 /* ─── Top Bar ──────────────────────────────────────────────── */
 .topbar {
@@ -327,13 +317,10 @@ input, textarea, select { font-family: inherit; color: inherit; }
   white-space: nowrap;
 }
 .btn-primary {
-  background: var(--db-blue);
-  color: white;
+  background: var(--primary);
+  color: #fff;
 }
-.btn-primary:hover {
-  background: var(--db-blue-light);
-  box-shadow: var(--shadow-glow-blue);
-}
+.btn-primary:hover { background: #3182ce; }
 .btn-ghost {
   color: var(--text-secondary);
 }
@@ -342,10 +329,12 @@ input, textarea, select { font-family: inherit; color: inherit; }
   color: var(--text-primary);
 }
 .btn-danger {
-  color: var(--f1-red);
+  color: var(--danger);
+  background: rgba(248, 81, 73, 0.1);
 }
 .btn-danger:hover {
-  background: var(--f1-red-dim);
+  background: var(--danger);
+  color: #fff;
 }
 .btn-icon {
   width: 36px;
@@ -369,7 +358,7 @@ input, textarea, select { font-family: inherit; color: inherit; }
   width: 56px;
   height: 56px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--db-blue), var(--f1-purple));
+  background: linear-gradient(135deg, var(--db-blue), var(--primary));
   color: white;
   box-shadow: var(--shadow-lg), var(--shadow-glow-blue);
   z-index: 40;
@@ -707,7 +696,7 @@ input, textarea, select { font-family: inherit; color: inherit; }
   margin-bottom: var(--space-2);
 }
 .briefing-greeting span {
-  background: linear-gradient(135deg, var(--db-bright-blue), var(--f1-purple));
+  background: linear-gradient(135deg, var(--db-bright-blue), var(--primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -768,7 +757,7 @@ input, textarea, select { font-family: inherit; color: inherit; }
 
 .briefing-p1-card {
   background: var(--surface);
-  border: 1px solid var(--f1-red);
+  border: 1px solid var(--danger);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
   position: relative;
@@ -781,7 +770,7 @@ input, textarea, select { font-family: inherit; color: inherit; }
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--f1-red), var(--f1-purple));
+  background: linear-gradient(90deg, var(--danger), var(--primary));
 }
 .briefing-p1-title {
   font-size: 1.3rem;
@@ -822,7 +811,7 @@ input, textarea, select { font-family: inherit; color: inherit; }
 }
 .briefing-velocity-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--db-blue), var(--f1-green));
+  background: linear-gradient(90deg, var(--db-blue), var(--success));
   border-radius: var(--radius-full);
   transition: width var(--transition-slow);
 }
@@ -859,8 +848,8 @@ input, textarea, select { font-family: inherit; color: inherit; }
   line-height: 1;
   margin-bottom: var(--space-4);
 }
-.focus-timer.work { color: var(--f1-red); }
-.focus-timer.shortBreak { color: var(--f1-green); }
+.focus-timer.work { color: var(--danger); }
+.focus-timer.shortBreak { color: var(--success); }
 .focus-timer.longBreak { color: var(--db-bright-blue); }
 
 .focus-mode-label {
@@ -913,8 +902,8 @@ input, textarea, select { font-family: inherit; color: inherit; }
   background: var(--surface-elevated);
 }
 .focus-session-dot.completed {
-  background: var(--f1-green);
-  box-shadow: 0 0 8px var(--f1-green);
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
 }
 
 /* ─── Analytics ────────────────────────────────────────────── */
@@ -1337,7 +1326,7 @@ input, textarea, select { font-family: inherit; color: inherit; }
   width: 72px;
   height: 72px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, var(--db-blue), var(--f1-purple));
+  background: linear-gradient(135deg, var(--db-blue), var(--primary));
   display: flex;
   align-items: center;
   justify-content: center;

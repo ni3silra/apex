@@ -11,28 +11,54 @@ const useFocusStore = create((set, get) => ({
   sessionsCompleted: 0,
   isPaused: true,
   settings: { ...POMODORO_DEFAULTS },
+  intervalId: null,
+
+  setWorkMinutes: (mins) => set(s => ({ 
+    settings: { ...s.settings, workMinutes: mins },
+    timeRemaining: mins * 60
+  })),
 
   startFocus: (taskId) => {
+    const { intervalId } = get();
+    if (intervalId) clearInterval(intervalId);
+    
+    const id = setInterval(() => get().tick(), 1000);
+    
     set({
       isActive: true,
       taskId,
       mode: 'work',
       timeRemaining: get().settings.workMinutes * 60,
       isPaused: false,
+      intervalId: id
     });
   },
 
   stopFocus: () => {
+    const { intervalId } = get();
+    if (intervalId) clearInterval(intervalId);
+    
     set({
       isActive: false,
       taskId: null,
       mode: 'work',
       timeRemaining: get().settings.workMinutes * 60,
       isPaused: true,
+      intervalId: null
     });
   },
 
-  togglePause: () => set(s => ({ isPaused: !s.isPaused })),
+  togglePause: () => {
+    const { isPaused, intervalId } = get();
+    if (isPaused) {
+      if (intervalId) clearInterval(intervalId);
+      const id = setInterval(() => get().tick(), 1000);
+      set({ isPaused: false, intervalId: id });
+    } else {
+      if (intervalId) clearInterval(intervalId);
+      set({ isPaused: true, intervalId: null });
+    }
+  },
 
   tick: () => {
     const { timeRemaining, mode, isPaused, sessionsCompleted, settings } = get();

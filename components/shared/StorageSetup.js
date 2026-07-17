@@ -58,8 +58,8 @@ export default function StorageSetup() {
         {storageReady ? (
           <>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-4)' }}>
-              <CheckCircle size={20} style={{ color: 'var(--f1-green)' }} />
-              <span style={{ color: 'var(--f1-green)', fontWeight: 600 }}>Storage folder connected</span>
+              <CheckCircle size={20} style={{ color: 'var(--success)' }} />
+              <span style={{ color: 'var(--success)', fontWeight: 600 }}>Storage folder connected</span>
             </div>
             <p>Your tasks are saved as JSON files on your local disk. Even clearing browser data won&apos;t lose your work.</p>
             <div className="storage-setup-buttons">
@@ -78,11 +78,11 @@ export default function StorageSetup() {
               readable <code>.json</code> files that survive browser resets and are Git-trackable.
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-4)', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-              <Shield size={14} style={{ color: 'var(--f1-green)' }} />
+              <Shield size={14} style={{ color: 'var(--success)' }} />
               Files stay on your computer. Nothing is uploaded.
             </div>
             {error && (
-              <div style={{ color: 'var(--f1-red)', fontSize: '0.85rem', marginBottom: 'var(--space-3)' }}>{error}</div>
+              <div style={{ color: 'var(--danger)', fontSize: '0.85rem', marginBottom: 'var(--space-3)' }}>{error}</div>
             )}
             <div className="storage-setup-buttons">
               <button

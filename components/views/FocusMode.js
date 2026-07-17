@@ -36,6 +36,9 @@ export default function FocusMode() {
     longBreak: <Coffee size={20} />,
   };
 
+  const setWorkMinutes = useFocusStore(s => s.setWorkMinutes);
+  const workMinutes = useFocusStore(s => s.settings.workMinutes);
+
   const handleStartFocus = (task) => {
     startFocus(task.id);
   };
@@ -57,9 +60,26 @@ export default function FocusMode() {
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', fontWeight: 800, marginBottom: 'var(--space-3)' }}>
             Focus Mode
           </h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--space-8)' }}>
-            Select a task to start a deep work session with Pomodoro timer.
+          <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--space-6)' }}>
+            Select a duration and a task to start a deep work session.
           </p>
+
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-8)' }}>
+            {[5, 10, 15, 20, 25].map(mins => (
+              <button
+                key={mins}
+                className={`btn ${workMinutes === mins ? 'btn-primary' : 'btn-ghost'}`}
+                style={{
+                  border: workMinutes === mins ? 'none' : '1px solid var(--border-subtle)',
+                  borderRadius: 'var(--radius-full)',
+                  padding: 'var(--space-2) var(--space-4)'
+                }}
+                onClick={() => setWorkMinutes(mins)}
+              >
+                {mins} min
+              </button>
+            ))}
+          </div>
 
           {topTask && (
             <motion.div
@@ -93,14 +113,18 @@ export default function FocusMode() {
               {ranked.slice(1, 6).map(task => (
                 <button
                   key={task.id}
-                  className="f1-rank-row"
-                  style={{ marginBottom: 'var(--space-2)', width: '100%', textAlign: 'left' }}
+                  style={{ 
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    marginBottom: 'var(--space-2)', width: '100%', textAlign: 'left',
+                    padding: 'var(--space-3) var(--space-4)', background: 'var(--surface)',
+                    border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)'
+                  }}
                   onClick={() => handleStartFocus(task)}
                 >
-                  <div className="f1-task-info">
-                    <div className="f1-task-title">{task.title}</div>
+                  <div style={{ fontWeight: 600, fontSize: '0.92rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {task.title}
                   </div>
-                  <Play size={16} style={{ color: 'var(--db-bright-blue)' }} />
+                  <Play size={16} style={{ color: 'var(--db-bright-blue)', flexShrink: 0 }} />
                 </button>
               ))}
             </div>
@@ -128,7 +152,7 @@ export default function FocusMode() {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         style={{
-          color: mode === 'work' ? 'var(--f1-red)' : 'var(--f1-green)',
+          color: mode === 'work' ? 'var(--danger)' : 'var(--success)',
           display: 'flex',
           alignItems: 'center',
           gap: 'var(--space-2)',

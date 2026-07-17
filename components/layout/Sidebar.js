@@ -3,10 +3,17 @@ import useSettingsStore from '@/stores/useSettingsStore';
 import useTaskStore from '@/stores/useTaskStore';
 import { VIEWS, QUADRANTS } from '@/lib/constants';
 import { hasStorageSetup } from '@/lib/storage';
-import { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, HardDrive, Settings, Download } from 'lucide-react';
+import { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, HardDrive, Settings, Download, List } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-const ICON_MAP = { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3 };
+const ICON_MAP = { LayoutDashboard, Grid2x2, Trophy, Target, BarChart3, List };
+const ICON_COLORS = {
+  briefing: 'var(--primary)',
+  matrix: 'var(--success)',
+  ranking: 'var(--warning)',
+  focus: 'var(--danger)',
+  analytics: 'var(--db-bright-blue)'
+};
 
 export default function Sidebar() {
   const activeView = useSettingsStore(s => s.activeView);
@@ -36,13 +43,14 @@ export default function Sidebar() {
         <div className="sidebar-section-title">Views</div>
         {Object.values(VIEWS).map(view => {
           const Icon = ICON_MAP[view.icon];
+          const color = ICON_COLORS[view.id] || 'var(--text-secondary)';
           return (
             <button
               key={view.id}
               className={`sidebar-nav-item ${activeView === view.id ? 'active' : ''}`}
               onClick={() => setView(view.id)}
             >
-              {Icon && <Icon size={18} />}
+              {Icon && <Icon size={18} style={{ color }} />}
               {view.label}
               <span className="sidebar-nav-shortcut">{view.shortcut}</span>
             </button>

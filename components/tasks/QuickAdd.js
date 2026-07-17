@@ -44,7 +44,7 @@ export default function QuickAdd() {
       >
         <form onSubmit={handleSubmit}>
           <div className="quick-add-input-wrapper">
-            <Zap size={20} style={{ color: 'var(--f1-purple)', flexShrink: 0 }} />
+            <Zap size={20} style={{ color: 'var(--primary)', flexShrink: 0 }} />
             <input
               ref={inputRef}
               className="quick-add-input"

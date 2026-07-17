@@ -10,7 +10,7 @@ import TopBar from '@/components/layout/TopBar';
 import ShortcutsOverlay from '@/components/layout/ShortcutsOverlay';
 import DailyBriefing from '@/components/views/DailyBriefing';
 import EisenhowerMatrix from '@/components/views/EisenhowerMatrix';
-import F1Dashboard from '@/components/views/F1Dashboard';
+import PriorityQueue from '@/components/views/PriorityQueue';
 import FocusMode from '@/components/views/FocusMode';
 import Analytics from '@/components/views/Analytics';
 import TaskModal from '@/components/tasks/TaskModal';
@@ -134,7 +134,7 @@ export default function Home() {
     switch (activeView) {
       case 'briefing': return <DailyBriefing />;
       case 'matrix': return <EisenhowerMatrix />;
-      case 'ranking': return <F1Dashboard />;
+      case 'ranking': return <PriorityQueue />;
       case 'focus': return <FocusMode />;
       case 'analytics': return <Analytics />;
       default: return <DailyBriefing />;

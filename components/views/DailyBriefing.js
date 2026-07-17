@@ -61,14 +61,14 @@ export default function DailyBriefing() {
         transition={{ duration: 0.5, delay: 0.1 }}
       >
         <div className="briefing-stat-card" onClick={() => setView('matrix')} style={{ cursor: 'pointer' }}>
-          <div className="briefing-stat-value" style={{ color: 'var(--f1-red)' }}>{overdueTasks.length}</div>
+          <div className="briefing-stat-value" style={{ color: 'var(--danger)' }}>{overdueTasks.length}</div>
           <div className="briefing-stat-label">
             <AlertTriangle size={13} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />
             Overdue
           </div>
         </div>
         <div className="briefing-stat-card" onClick={() => setView('matrix')} style={{ cursor: 'pointer' }}>
-          <div className="briefing-stat-value" style={{ color: 'var(--f1-yellow)' }}>{dueTodayTasks.length}</div>
+          <div className="briefing-stat-value" style={{ color: 'var(--warning)' }}>{dueTodayTasks.length}</div>
           <div className="briefing-stat-label">
             <Clock size={13} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />
             Due Today
@@ -92,7 +92,7 @@ export default function DailyBriefing() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <div className="briefing-section-title">
-            <Zap size={16} style={{ color: 'var(--f1-red)' }} />
+            <Zap size={16} style={{ color: 'var(--danger)' }} />
             TOP PRIORITY
           </div>
           <div className="briefing-p1-card" onClick={() => selectTask(p1Task.id)} style={{ cursor: 'pointer' }}>
@@ -142,10 +142,10 @@ export default function DailyBriefing() {
         >
           <div
             className="briefing-p1-card"
-            style={{ borderColor: 'var(--f1-green)', textAlign: 'center', padding: 'var(--space-8)' }}
+            style={{ borderColor: 'var(--success)', textAlign: 'center', padding: 'var(--space-8)' }}
           >
-            <CheckCircle2 size={48} style={{ color: 'var(--f1-green)', marginBottom: 'var(--space-4)' }} />
-            <div className="briefing-p1-title" style={{ color: 'var(--f1-green)' }}>All Clear!</div>
+            <CheckCircle2 size={48} style={{ color: 'var(--success)', marginBottom: 'var(--space-4)' }} />
+            <div className="briefing-p1-title" style={{ color: 'var(--success)' }}>All Clear!</div>
             <p style={{ color: 'var(--text-secondary)' }}>No active tasks. Add one with Ctrl+N.</p>
           </div>
         </motion.div>
@@ -191,7 +191,7 @@ export default function DailyBriefing() {
               fontFamily: 'var(--font-display)',
               fontSize: '1.5rem',
               fontWeight: 800,
-              color: velocity > 70 ? 'var(--f1-green)' : velocity > 40 ? 'var(--f1-yellow)' : 'var(--f1-red)',
+              color: velocity > 70 ? 'var(--success)' : velocity > 40 ? 'var(--warning)' : 'var(--danger)',
             }}>
               {velocity}%
             </span>

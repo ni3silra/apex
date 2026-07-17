@@ -39,7 +39,7 @@ export default function CommandPalette() {
             {/* Actions */}
             <Command.Group heading="Actions">
               <Command.Item onSelect={() => handleSelect(() => { toggleCommandPalette(); toggleQuickAdd(); })}>
-                <Plus size={16} style={{ color: 'var(--f1-green)' }} />
+                <Plus size={16} style={{ color: 'var(--success)' }} />
                 New Task
               </Command.Item>
             </Command.Group>

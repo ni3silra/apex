@@ -54,7 +54,7 @@ export default function ExportImport() {
       </div>
 
       <div className="export-option" onClick={() => fileInputRef.current?.click()}>
-        <Upload size={20} style={{ color: 'var(--f1-green)' }} />
+        <Upload size={20} style={{ color: 'var(--success)' }} />
         <div>
           <div style={{ fontWeight: 600 }}>Import Data</div>
           <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>Load tasks from a JSON backup</div>

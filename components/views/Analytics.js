@@ -82,7 +82,7 @@ export default function Analytics() {
         animate={{ opacity: 1, y: 0 }}
       >
         <h2>
-          <BarChart3 size={24} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 8, color: 'var(--f1-purple)' }} />
+          <BarChart3 size={24} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 8, color: 'var(--primary)' }} />
           Performance Analytics
         </h2>
       </motion.div>
@@ -99,7 +99,7 @@ export default function Analytics() {
             <CheckCircle2 size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />
             Completion Rate
           </div>
-          <div className="analytics-big-number" style={{ color: completionRate > 70 ? 'var(--f1-green)' : completionRate > 40 ? 'var(--f1-yellow)' : 'var(--f1-red)' }}>
+          <div className="analytics-big-number" style={{ color: completionRate > 70 ? 'var(--success)' : completionRate > 40 ? 'var(--warning)' : 'var(--danger)' }}>
             {completionRate}%
           </div>
           <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginTop: 'var(--space-2)' }}>
@@ -135,10 +135,10 @@ export default function Analytics() {
             <Target size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />
             Focus Time (7 days)
           </div>
-          <div className="analytics-big-number" style={{ color: 'var(--f1-purple)' }}>
+          <div className="analytics-big-number" style={{ color: 'var(--primary)' }}>
             {Math.round(last7DaysFocus.reduce((a, b) => a + b, 0))}m
           </div>
-          <MiniBarChart data={last7DaysFocus} color="var(--f1-purple)" />
+          <MiniBarChart data={last7DaysFocus} color="var(--primary)" />
         </motion.div>
 
         {/* Overdue */}
@@ -152,7 +152,7 @@ export default function Analytics() {
             <Clock size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />
             Overdue Tasks
           </div>
-          <div className="analytics-big-number" style={{ color: overdueTasks > 0 ? 'var(--f1-red)' : 'var(--f1-green)' }}>
+          <div className="analytics-big-number" style={{ color: overdueTasks > 0 ? 'var(--danger)' : 'var(--success)' }}>
             {overdueTasks}
           </div>
           <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginTop: 'var(--space-2)' }}>
